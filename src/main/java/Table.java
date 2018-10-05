@@ -40,7 +40,8 @@ public class Table {
             item.genSex();
             item.genIndex();
             item.genApartment();
-            item.genIndex();
+            item.genITN();
+            item.genDataBirth();
         }
 
         for (String path: paths.keySet()) {
