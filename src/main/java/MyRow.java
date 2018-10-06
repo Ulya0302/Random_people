@@ -74,6 +74,7 @@ class MyRow{
     public int getHome() {
         return home;
     }
+
     public int getApart() {
         return apartment;
     }
@@ -158,6 +159,7 @@ class MyRow{
         apartment = gen.nextInt(500) + 1;
         home = gen.nextInt(500) + 1;
     }
+
     public void genIndex() {
         index = gen.nextInt(899999) + 100000;
     }

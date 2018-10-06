@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ReadFileByLine {
-    static String path;
+    private static String path;
     public ReadFileByLine(String path) {
         this.path = path;
     }
@@ -10,15 +10,12 @@ public class ReadFileByLine {
     public ArrayList<String> startRead() {
         ArrayList<String> lines = new ArrayList<String>();
         try {
-            File f = new File(path);
-            FileReader fr = new FileReader(f);
-            BufferedReader reader = new BufferedReader(fr);
-            String line = reader.readLine();
-            while (line != null) {
-                lines.add(line);
-                line = reader.readLine();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(new FileInputStream(path), "utf-8"))) {
+                String line;
+                while ((line = reader.readLine()) != null)
+                    lines.add(line);
             }
-
         }
         catch (FileNotFoundException ex) {
             ex.printStackTrace();
