@@ -1,8 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("");
-        Table t = new Table();
+        MyTable t = new MyTable();
         t.createTable();
         t.saveTableToExcel();
+        t.saveTableToPdf();
     }
 }
