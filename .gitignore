@@ -2,3 +2,4 @@
 target/
 GeneratedTable.xlsx
 GeneratedPDF.pdf
+*.iml
