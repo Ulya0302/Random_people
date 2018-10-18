@@ -31,12 +31,24 @@ public class MyTable {
         paths.put("src/main/resources/streets.txt", "street");
     }
 
-    public void createTable() {
-        createValues();
-        setValues();
+    public void createTableFromAPI() {
+        ApiWorker api = new ApiWorker();
+        for (int i = 0; i < quant; i++)
+            table.add(api.callApi());
+        for (MyRow item: table) {
+            item.genSex();
+            item.genApartment();
+            item.genITN();
+            item.genDataBirth();
+        }
     }
 
-    private void createValues() {
+    public void createTableFromFile() {
+        createRows();
+        setRows();
+    }
+
+    private void createRows() {
         /**
          * Метод создает заданное количество записей
          */
@@ -45,7 +57,7 @@ public class MyTable {
         }
     }
 
-    private void setValues() {
+    private void setRows() {
         /**
          * Метод заполняет поля записей
          * Стоит отметить, что заполненение записей ведется не построчно
@@ -82,6 +94,5 @@ public class MyTable {
     public void saveTableToPdf() {
         CreatePdfFile fl = new CreatePdfFile(table);
         fl.save();
-
     }
 }

@@ -17,6 +17,23 @@ class MyRow{
     private GregorianCalendar dateBir;
     private String[] gend = {"М", "Ж"};
     private Map<String, String> vars = new HashMap<String, String>();
+
+    public MyRow() {}
+
+    public MyRow(String name, String surname, String midname,
+                 String sex, String country,
+                 String region, String town,
+                 String street, int index ) {
+        vars.put("name", name);
+        vars.put("surname", surname);
+        vars.put("midname", midname);
+        vars.put("country", country);
+        vars.put("region", region);
+        vars.put("town", town);
+        vars.put("street", street);
+        this.sex = sex;
+        this.index = index;
+    }
     
     public String getName() {
         return vars.get("name");
