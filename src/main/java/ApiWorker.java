@@ -36,9 +36,6 @@ public class ApiWorker {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(MyRow.class, new JsonConventer())
                     .create();
-            System.out.println(mainJson.toString());
-            System.out.println(mainJson.getString("region"));
-
             return gson.fromJson(mainJson.toString(), MyRow.class);
         }
         catch (JSONException | UnirestException ex) {
