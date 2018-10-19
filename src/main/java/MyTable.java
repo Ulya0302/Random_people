@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Класс представляет собой абстрактное представление таблицы
@@ -33,14 +30,23 @@ public class MyTable {
 
     public void createTableFromAPI() {
         ApiWorker api = new ApiWorker();
-        for (int i = 0; i < quant; i++)
-            table.add(api.callApi());
+        try {
+            for (int i = 0; i < quant; i++)
+                table.add(api.callApi());
+        }
+        catch (StackOverflowError err){
+            Scanner scn = new Scanner(System.in);
+            System.out.println("Ooops. There is no connection to Internet. Sorry. " +
+                    "If some rows were created, they will be saved. Press Enter to continue");
+            scn.nextLine();
+        }
         for (MyRow item: table) {
             item.genSex();
             item.genApartment();
             item.genITN();
             item.genDataBirth();
         }
+
     }
 
     public void createTableFromFile() {

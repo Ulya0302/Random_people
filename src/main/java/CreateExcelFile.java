@@ -31,7 +31,7 @@ public class CreateExcelFile {
             f.createNewFile();
             FileOutputStream out = new FileOutputStream(f);
             wb.write(out);
-            System.out.println("Файл успешно создан. Путь к файлу: " + f.getAbsolutePath());
+            System.out.println("File has been created successfully. Path: " + f.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }

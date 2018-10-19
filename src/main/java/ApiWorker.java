@@ -18,12 +18,19 @@ public class ApiWorker {
                     .getString("region");
             int index = mainJson.getInt("postcode");
             mainJson.put("country", country);
-            String region = Unirest.get("http://api.print-post.com/api/index/v2/").queryString("index", index)
-                    .asJson().getBody().getObject().getString("region");
+            JSONObject bufJson = Unirest.get("http://api.print-post.com/api/index/v2/")
+                    .queryString("index", index)
+                    .asJson().getBody().getObject();
+            String region = bufJson.getString("region");
+            if (region.equals(""))
+                region = bufJson.getString("okrug");
             mainJson.put("region", region);
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(MyRow.class, new JsonConventer())
                     .create();
+            System.out.println(mainJson.toString());
+            System.out.println(mainJson.getString("region"));
+
             return gson.fromJson(mainJson.toString(), MyRow.class);
         }
         catch (JSONException | UnirestException ex) {
