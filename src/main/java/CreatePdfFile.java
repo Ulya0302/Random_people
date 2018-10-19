@@ -38,7 +38,7 @@ public class CreatePdfFile {
             tbl = writeHeader(tbl, font);
             tbl = writeRows(tbl, font);
             document.add(tbl);
-            System.out.println("Файл успешно создан. Путь к файлу: "+ f.getAbsolutePath());
+            System.out.println("File has been created successfully. Path: "+ f.getAbsolutePath());
             document.close();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();

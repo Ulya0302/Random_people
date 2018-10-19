@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         MyTable t = new MyTable();
-        t.createTable();
+        t.createTableFromAPI();
         t.saveTableToExcel();
         t.saveTableToPdf();
     }

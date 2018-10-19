@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Класс представляет собой абстрактное представление таблицы
@@ -31,12 +28,33 @@ public class MyTable {
         paths.put("src/main/resources/streets.txt", "street");
     }
 
-    public void createTable() {
-        createValues();
-        setValues();
+    public void createTableFromAPI() {
+        ApiWorker api = new ApiWorker();
+        try {
+            for (int i = 0; i < quant; i++)
+                table.add(api.callApi());
+        }
+        catch (StackOverflowError err){
+            Scanner scn = new Scanner(System.in);
+            System.out.println("Ooops. There is no connection to Internet. Sorry. " +
+                    "If some rows were created, they will be saved. Press Enter to continue");
+            scn.nextLine();
+        }
+        for (MyRow item: table) {
+            item.genSex();
+            item.genApartment();
+            item.genITN();
+            item.genDataBirth();
+        }
+
     }
 
-    private void createValues() {
+    public void createTableFromFile() {
+        createRows();
+        setRows();
+    }
+
+    private void createRows() {
         /**
          * Метод создает заданное количество записей
          */
@@ -45,7 +63,7 @@ public class MyTable {
         }
     }
 
-    private void setValues() {
+    private void setRows() {
         /**
          * Метод заполняет поля записей
          * Стоит отметить, что заполненение записей ведется не построчно
@@ -82,6 +100,5 @@ public class MyTable {
     public void saveTableToPdf() {
         CreatePdfFile fl = new CreatePdfFile(table);
         fl.save();
-
     }
 }
