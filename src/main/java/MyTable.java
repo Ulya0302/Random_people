@@ -41,7 +41,6 @@ public class MyTable {
             scn.nextLine();
         }
         for (MyRow item: table) {
-            item.genSex();
             item.genApartment();
             item.genITN();
             item.genDataBirth();

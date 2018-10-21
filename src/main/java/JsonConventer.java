@@ -8,7 +8,7 @@ public class JsonConventer implements JsonDeserializer<MyRow> {
         String name = jsonElement.getAsJsonObject().get("fname").getAsString().replace("\"", "");
         String surname = jsonElement.getAsJsonObject().get("lname").getAsString().replace("\"", "");
         String midname = jsonElement.getAsJsonObject().get("patronymic").getAsString().replace("\"", "");
-        String sex = jsonElement.getAsJsonObject().get("gender").getAsString().replace("\"", "") == "m"?"М":"Ж";
+        String sex = jsonElement.getAsJsonObject().get("gender").getAsString().replace("\"", "").equals("m")?"М":"Ж";
         String country = jsonElement.getAsJsonObject().get("country").getAsString().replace("\"", "");
         String city = jsonElement.getAsJsonObject().get("city").getAsString().replace("\"", "");
         String street = jsonElement.getAsJsonObject().get("street").getAsString().replace("\"", "");
