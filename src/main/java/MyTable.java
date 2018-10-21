@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -28,25 +31,46 @@ public class MyTable {
         paths.put("src/main/resources/streets.txt", "street");
     }
 
+    public ArrayList<MyRow> getTable() {
+        return table;
+    }
+
     public void createTableFromAPI() {
         ApiWorker api = new ApiWorker();
+        int n = quant;
         try {
-            for (int i = 0; i < quant; i++)
+            for (int i = 0; i < quant; i++, n--)
                 table.add(api.callApi());
+            DataBaseWorker dtb = new DataBaseWorker();
+            dtb.saveTableIntoDB(this);
+            System.out.println("Rows was successfully added into database.");
+            dtb.close();
+
         }
-        catch (StackOverflowError err){
+        catch (StackOverflowError err) {
             Scanner scn = new Scanner(System.in);
-            System.out.println("Ooops. There is no connection to Internet. Sorry. " +
-                    "If some rows were created, they will be saved. Press Enter to continue");
-            scn.nextLine();
+            System.out.println("Ooops. There is no connection to Internet.. " +
+                    "Trying to connect to database and get data from its...");
+            try {
+                DataBaseWorker dtb = new DataBaseWorker();
+                for (int i = 0; i < n; i++)
+                    table.add(dtb.getMyRowFromDB());
+                dtb.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+                System.out.println("Can't get data from database.");
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println("Can't save rows to database.");
+            ex.printStackTrace();
         }
         for (MyRow item: table) {
-            item.genSex();
             item.genApartment();
             item.genITN();
             item.genDataBirth();
         }
-
     }
 
     public void createTableFromFile() {
@@ -83,11 +107,16 @@ public class MyTable {
             item.genDataBirth();
         }
         for (String path: paths.keySet()) {
-            ArrayList<String> values;
-            ReadFileByLine buf = new ReadFileByLine(path);
-            values = buf.startRead();
-            for (MyRow item: table) {
-                item.genValue(path, values, paths.get(path));
+            try {
+                ArrayList<String> values;
+                ReadFileByLine buf = new ReadFileByLine(path);
+                values = buf.startRead();
+                for (MyRow item : table) {
+                    item.genValue(path, values, paths.get(path));
+                }
+            }
+            catch (IOException err) {
+                err.printStackTrace();
             }
         }
     }
