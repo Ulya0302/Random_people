@@ -1,0 +1,3 @@
+login:root
+password:root
+URL:127.0.0.1:3306/fintech

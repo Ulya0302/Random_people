@@ -1,3 +1,5 @@
+import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,7 +14,6 @@ public class DataBaseWorker {
     private static Connection con;
     private static Statement stmt;
     private static ResultSet resSet = null;
-    //private static Scanner in = new Scanner(System.in);
 
     public DataBaseWorker() throws SQLException {
         File f = new File("src/main/resourses/ConnectionData.txt");
@@ -26,12 +27,10 @@ public class DataBaseWorker {
 
         }
         catch (FileNotFoundException ex) {
-            //ex.printStackTrace();
             System.out.println("File " + f.getName() +  " not found. Please, find in README, how to create it");
             throw new SQLException();
         }
         catch (IOException ex)  {
-            //ex.printStackTrace();
             System.out.println("Error while reading file. Please check file and their data and try again");
             throw new SQLException();
         }
@@ -69,18 +68,18 @@ public class DataBaseWorker {
 
     public void addRowIntoDB(MyRow row) throws SQLException {
         String query;
-        query = "SELECT id, name, surname, midname FROM people WHERE " +
-                "name="+row.getName()+", " +
-                "surname="+row.getSurname() + ", " +
-                "midname="+row.getMidname() + ";";
+        query = "SELECT human_id, name, surname, midname FROM people WHERE " +
+                "name=\""+row.getName()+"\" AND " +
+                "surname=\""+row.getSurname() + "\" AND " +
+                "midname=\""+row.getMidname() + "\";";
         resSet = stmt.executeQuery(query);
         if (resSet.next()) {
             query = "UPDATE people SET " +
-                    "country='"+row.getCountry() + "', " +
-                    "region='"+row.getRegion() + "', " +
-                    "town='"+row.getTown() + "', " +
-                    "street='"+row.getTown() + "', " +
-                    "index='"+row.getTown() + "' " +
+                    "country=\""+row.getCountry() + "\", " +
+                    "region=\""+row.getRegion() + "\", " +
+                    "town=\""+row.getTown() + "\", " +
+                    "street=\""+row.getStreet() + "\", " +
+                    "ind="+row.getIndex() + " " +
                     "WHERE human_id="+resSet.getInt(1)+";";
         }
         else {
@@ -106,8 +105,10 @@ public class DataBaseWorker {
             resSet.next();
             int count = resSet.getInt(1);
             if (count == 0) {
-                System.out.println("In database no rows.");
+                System.out.println("In table no rows.");
+                close();
                 throw new SQLException();
+
             }
             resSet = stmt.executeQuery("SELECT * FROM people");
         }
@@ -128,6 +129,7 @@ public class DataBaseWorker {
     }
     public void close() throws SQLException {
         con.close();
+        AbandonedConnectionCleanupThread.checkedShutdown();
     }
 
 

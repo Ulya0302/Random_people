@@ -63,7 +63,6 @@ public class MyTable {
         }
         catch (SQLException ex) {
             System.out.println("Can't save rows to database.");
-            ex.printStackTrace();
         }
         for (MyRow item: table) {
             item.genApartment();
