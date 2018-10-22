@@ -68,18 +68,35 @@ public class DataBaseWorker {
     }
 
     public void addRowIntoDB(MyRow row) throws SQLException {
-        String query = "INSERT INTO people" +
-                "(name, surname, midname, sex, country, region, town, street, ind) " +
-                "VALUES (\"" +
-                row.getName() + "\", \"" +
-                row.getSurname() + "\", \"" +
-                row.getMidname() + "\", \"" +
-                row.getSex() + "\", \"" +
-                row.getCountry() + "\", \"" +
-                row.getRegion() + "\", \"" +
-                row.getTown() + "\", \"" +
-                row.getStreet() + "\", " +
-                row.getIndex() + ");";
+        String query;
+        query = "SELECT id, name, surname, midname FROM people WHERE " +
+                "name="+row.getName()+", " +
+                "surname="+row.getSurname() + ", " +
+                "midname="+row.getMidname() + ";";
+        resSet = stmt.executeQuery(query);
+        if (resSet.next()) {
+            query = "UPDATE people SET " +
+                    "country='"+row.getCountry() + "', " +
+                    "region='"+row.getRegion() + "', " +
+                    "town='"+row.getTown() + "', " +
+                    "street='"+row.getTown() + "', " +
+                    "index='"+row.getTown() + "' " +
+                    "WHERE human_id="+resSet.getInt(1)+";";
+        }
+        else {
+            query = "INSERT INTO people" +
+                    "(name, surname, midname, sex, country, region, town, street, ind) " +
+                    "VALUES (\"" +
+                    row.getName() + "\", \"" +
+                    row.getSurname() + "\", \"" +
+                    row.getMidname() + "\", \"" +
+                    row.getSex() + "\", \"" +
+                    row.getCountry() + "\", \"" +
+                    row.getRegion() + "\", \"" +
+                    row.getTown() + "\", \"" +
+                    row.getStreet() + "\", " +
+                    row.getIndex() + ");";
+        }
         stmt.executeUpdate(query);
     }
 

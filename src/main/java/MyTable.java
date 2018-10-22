@@ -58,7 +58,6 @@ public class MyTable {
                 dtb.close();
             }
             catch (SQLException ex) {
-                ex.printStackTrace();
                 System.out.println("Can't get data from database.");
             }
         }
