@@ -111,7 +111,7 @@ public class MyRow{
     }
 
     //Дата генерируется в пределах от 01.01.1920 до 12.12.1999
-    void genDataBirth() {
+    public void genDataBirth() {
         int genYear = gen.nextInt(80) + 1920 ;
         int genDayYear = gen.nextInt(365) + 1;
         dateBir.set(Calendar.YEAR, genYear);
@@ -119,16 +119,16 @@ public class MyRow{
         setAge();
     }
 
-    void genSex() {
+    public void genSex() {
         sex = gend[gen.nextInt(2)];
     }
 
-    void genApartment() {
+    public void genApartment() {
         apartment = gen.nextInt(500) + 1;
         home = gen.nextInt(500) + 1;
     }
 
-    void genIndex() {
+    public void genIndex() {
         index = gen.nextInt(899999) + 100000;
     }
 
@@ -139,7 +139,7 @@ public class MyRow{
      * В полях, где пол не важен (страна, город...) просто происходит заполенение
      * В словарь объекта добавляется пара "nameField":"valueField"
      */
-    void genValue(String path, ArrayList<String> vals, String variable) {
+    public void genValue(String path, ArrayList<String> vals, String variable) {
         if ((variable.equals("name")) || (variable.equals("surname")) || (variable.equals("midname"))) {
             String buf = path.split("[.]")[0];
             String gender;
@@ -165,7 +165,7 @@ public class MyRow{
      * Затем случайные 6 цифр
      * Последние 2 цифры - контрольные суммы, вычисляются по алгоритму
      */
-    void genITN() {
+    public void genITN() {
         String s = "77";
         int k = gen.nextInt(51) + 1;
         if (k < 10) {
