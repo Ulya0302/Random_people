@@ -22,4 +22,4 @@ human_id, name, surname, midname, sex, country, region, town, street, ind
 2. В переменную PATH должен быть добавлен путь к mvn.cmd и к java По умолчанию: C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.4\plugins\maven\lib\maven3\bin C:\Program Files\Java\jdk1.8.0_181\bin
 3. Запустить командную строку, перейти в папку с проектом
 4. Выполнить команду mvn compile
-5. Выполнить команду mvn exec:java -Dexec.mainClass="Main"
+5. Выполнить команду mvn exec:java -Dexec.mainClass="main.Main"

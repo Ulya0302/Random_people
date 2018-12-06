@@ -1,4 +1,8 @@
+package instruments;
+
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
+import table.MyRow;
+import table.MyTable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,7 +48,7 @@ public class DataBaseWorker {
         createTable();
     }
 
-    public void createTable() throws SQLException {
+    private void createTable() throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS people (" +
                 "human_id INT PRIMARY KEY AUTO_INCREMENT,\n" +
                 "name VARCHAR(60) NOT NULL,\n" +

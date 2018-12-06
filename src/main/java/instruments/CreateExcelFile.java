@@ -1,6 +1,9 @@
+package instruments;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import table.MyRow;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Класс предназначен для создания XLSX-файла из таблицы
- * В конструктор пердетается список объектов MyRow
+ * В конструктор пердетается список объектов table.MyRow
  */
 
 public class CreateExcelFile {
@@ -23,8 +26,8 @@ public class CreateExcelFile {
     public void save() {
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet = wb.createSheet("Лист");
-        sheet = writeHeader(sheet);
-        sheet = writeRows(sheet);
+        writeHeader(sheet);
+        writeRows(sheet);
 
         try {
             File f = new File("GeneratedTable.xlsx");
@@ -36,15 +39,13 @@ public class CreateExcelFile {
             e.printStackTrace();
         }
     }
-    public XSSFSheet writeHeader (XSSFSheet sheet) {
-        int rowNum = 0;
-        Row row = sheet.createRow(rowNum++);
+    private void writeHeader(XSSFSheet sheet) {
+        Row row = sheet.createRow(0);
         for (int i = 0; i < MyRow.header.length; i++)
             row.createCell(i).setCellValue(MyRow.header[i]);
-        return sheet;
     }
 
-    public XSSFSheet writeRows(XSSFSheet sheet) {
+    private void writeRows(XSSFSheet sheet) {
         int rowNum = 0;
         for (MyRow bufMyRow : table) {
             Row tempRow = sheet.createRow(++rowNum);
@@ -63,6 +64,5 @@ public class CreateExcelFile {
             tempRow.createCell(12).setCellValue(bufMyRow.getHome());
             tempRow.createCell(13).setCellValue(bufMyRow.getApart());
         }
-        return sheet;
     }
 }
