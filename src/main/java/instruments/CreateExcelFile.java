@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import table.MyRow;
+import table.MyTable;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,12 +15,11 @@ import java.util.ArrayList;
  * Класс предназначен для создания XLSX-файла из таблицы
  * В конструктор пердетается список объектов table.MyRow
  */
-
 public class CreateExcelFile {
 
-    private ArrayList<MyRow> table;
+    private MyTable table;
 
-    public CreateExcelFile(ArrayList<MyRow> table) {
+    public CreateExcelFile(MyTable table) {
         this.table = table;
     }
 
@@ -47,7 +47,7 @@ public class CreateExcelFile {
 
     private void writeRows(XSSFSheet sheet) {
         int rowNum = 0;
-        for (MyRow bufMyRow : table) {
+        for (MyRow bufMyRow : table.getTable()) {
             Row tempRow = sheet.createRow(++rowNum);
             tempRow.createCell(0).setCellValue(bufMyRow.getName());
             tempRow.createCell(1).setCellValue(bufMyRow.getSurname());

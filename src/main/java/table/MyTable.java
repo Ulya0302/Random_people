@@ -1,12 +1,12 @@
 package table;
 
 import instruments.*;
-
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
-/*
+import static instruments.FillData.fillDataFromApi;
+
+/**
  * Класс представляет собой абстрактное представление таблицы
  * Все записи (объекта класса table.MyRow) хранятся в списке
  * При создании объекта класса генерируется количество записей
@@ -25,23 +25,33 @@ public class MyTable {
     }
 
     public void fillTableFromApi() {
-        FillData.fillDataFromApi(this, quant);
+        fillDataFromApi(this, quant);
     }
 
     public void saveTableToExcel() {
-        CreateExcelFile f = new CreateExcelFile(table);
+        CreateExcelFile f = new CreateExcelFile(this);
         f.save();
     }
 
     public void saveTableToPdf() {
-        CreatePdfFile fl = new CreatePdfFile(table);
+        CreatePdfFile fl = new CreatePdfFile(this);
         fl.save();
+    }
+
+    public void saveTableToDB() {
+        try {
+            DataBaseWorker dtb = new DataBaseWorker();
+            dtb.saveTableIntoDB(this);
+            dtb.close();
+            System.out.println("Rows was successfully added into database.");
+        }
+        catch (SQLException ex) {
+            System.out.println("Can't save rows to database.");
+        }
     }
 
     public void add(MyRow row) {
         table.add(row);
     }
-
-
 }
 

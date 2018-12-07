@@ -10,12 +10,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import table.MyRow;
 
-public class ApiWorker {
+class ApiWorker {
 
-    public ApiWorker() { BasicConfigurator.configure(new NullAppender());}
+    ApiWorker() { BasicConfigurator.configure(new NullAppender());}
 
 
-    /*
+    /**
       В mainJson есть практически вся необходимая информация, однако отсутствуют такие поля, как страна и регион
       Поле страна получается из другого API и добавляется в mainJson
       Поле регион получается из третьего API по полю index из mainJson
@@ -23,7 +23,7 @@ public class ApiWorker {
       невалидный index генерируется крайне редко.
       Затем mainJson в виде строки передается в десериализатор
     */
-    public MyRow callApi() {
+    MyRow callApi() {
         try {
             JSONObject mainJson = Unirest.get("https://randus.org/api.php").asJson().getBody().getObject();
             String country = Unirest.get("https://uinames.com/api/").asJson().getBody().getObject()

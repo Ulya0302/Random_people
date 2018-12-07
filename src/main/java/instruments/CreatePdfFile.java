@@ -11,20 +11,21 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.text.pdf.BaseFont;
 import table.MyRow;
+import table.MyTable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 /**
  * Класс предназначен для создания PDF-файла из таблицы
- * В конструктор пердетается список объектов table.MyRow
+ * В конструктор пердетается список объект MyTable
  */
 public class CreatePdfFile {
-    private ArrayList<MyRow> table;
+    private MyTable table;
 
-    public CreatePdfFile(ArrayList<MyRow> table) {
+    public CreatePdfFile(MyTable table) {
         this.table = table;
     }
 
@@ -57,7 +58,7 @@ public class CreatePdfFile {
     }
 
     private void writeRows(Table tbl, PdfFont font) {
-        for (MyRow row : table) {
+        for (MyRow row : table.getTable()) {
             tbl.addCell(new Cell().add(new Paragraph(row.getName()).setFont(font)));
             tbl.addCell(new Cell().add(new Paragraph(row.getSurname()).setFont(font)));
             tbl.addCell(new Cell().add(new Paragraph(row.getMidname()).setFont(font)));

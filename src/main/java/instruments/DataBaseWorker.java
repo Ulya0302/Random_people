@@ -70,7 +70,7 @@ public class DataBaseWorker {
         }
     }
 
-    public void addRowIntoDB(MyRow row) throws SQLException {
+    private void addRowIntoDB(MyRow row) throws SQLException {
         String query;
         query = "SELECT human_id, name, surname, midname FROM people WHERE " +
                 "name=\""+row.getName()+"\" AND " +
@@ -103,7 +103,7 @@ public class DataBaseWorker {
         stmt.executeUpdate(query);
     }
 
-    public MyRow getMyRowFromDB() throws SQLException {
+    public MyRow getRowFromDB() throws SQLException {
         if (resSet == null) {
             resSet = stmt.executeQuery("SELECT count(*) FROM people");
             resSet.next();

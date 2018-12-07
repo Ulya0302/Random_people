@@ -31,11 +31,6 @@ public class FillData {
         try {
             for (int i = 0; i < count; i++, n--)
                 tbl.getTable().add(api.callApi());
-            DataBaseWorker dtb = new DataBaseWorker();
-            dtb.saveTableIntoDB(tbl);
-            System.out.println("Rows was successfully added into database.");
-            dtb.close();
-
         }
         catch (StackOverflowError err) {
             System.out.println("Ooops. There is no connection to Internet.. " +
@@ -43,16 +38,14 @@ public class FillData {
             try {
                 DataBaseWorker dtb = new DataBaseWorker();
                 for (int i = 0; i < n; i++)
-                    tbl.add(dtb.getMyRowFromDB());
+                    tbl.add(dtb.getRowFromDB());
                 dtb.close();
             }
             catch (SQLException ex) {
                 System.out.println("Can't get data from database.");
             }
         }
-        catch (SQLException ex) {
-            System.out.println("Can't save rows to database.");
-        }
+
         for (MyRow item: tbl.getTable()) {
             item.genApartment();
             item.genITN();
@@ -72,7 +65,7 @@ public class FillData {
         setRows(tbl);
     }
 
-    /*
+    /**
      * Метод создает заданное количество записей
      */
     private static void createRows(MyTable tbl, int count) {
@@ -81,7 +74,7 @@ public class FillData {
         }
     }
 
-    /*
+    /**
      * Метод заполняет поля записей
      * Стоит отметить, что заполненение записей ведется не построчно
      * В первую очередь для всех записей заполняются поля пол, индекс, ИНН, дом и квартира, дата рождения
