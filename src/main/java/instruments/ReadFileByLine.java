@@ -1,4 +1,7 @@
+package instruments;
+
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -8,16 +11,16 @@ import java.util.ArrayList;
  * И метод возвращает список строк из файла
  */
 
-public class ReadFileByLine {
+class ReadFileByLine {
     private String path;
-    public ReadFileByLine(String path) {
+    ReadFileByLine(String path) {
         this.path = path;
     }
 
-    public ArrayList<String> startRead() throws FileNotFoundException, IOException {
-        ArrayList<String> lines = new ArrayList<String>();
+    ArrayList<String> startRead() throws IOException {
+        ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(path), "utf-8"))) {
+                new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null)
                 lines.add(line);

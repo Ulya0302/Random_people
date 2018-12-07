@@ -1,4 +1,8 @@
+package instruments;
+
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
+import table.MyRow;
+import table.MyTable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,7 +48,7 @@ public class DataBaseWorker {
         createTable();
     }
 
-    public void createTable() throws SQLException {
+    private void createTable() throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS people (" +
                 "human_id INT PRIMARY KEY AUTO_INCREMENT,\n" +
                 "name VARCHAR(60) NOT NULL,\n" +
@@ -66,7 +70,7 @@ public class DataBaseWorker {
         }
     }
 
-    public void addRowIntoDB(MyRow row) throws SQLException {
+    private void addRowIntoDB(MyRow row) throws SQLException {
         String query;
         query = "SELECT human_id, name, surname, midname FROM people WHERE " +
                 "name=\""+row.getName()+"\" AND " +
@@ -99,7 +103,7 @@ public class DataBaseWorker {
         stmt.executeUpdate(query);
     }
 
-    public MyRow getMyRowFromDB() throws SQLException {
+    public MyRow getRowFromDB() throws SQLException {
         if (resSet == null) {
             resSet = stmt.executeQuery("SELECT count(*) FROM people");
             resSet.next();

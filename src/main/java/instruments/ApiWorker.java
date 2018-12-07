@@ -1,3 +1,5 @@
+package instruments;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mashape.unirest.http.Unirest;
@@ -6,20 +8,22 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.varia.NullAppender;
 import org.json.JSONException;
 import org.json.JSONObject;
+import table.MyRow;
 
-public class ApiWorker {
+class ApiWorker {
 
-    public ApiWorker() { BasicConfigurator.configure(new NullAppender());}
+    ApiWorker() { BasicConfigurator.configure(new NullAppender());}
 
-    public MyRow callApi() {
-        /**
-         * В mainJson есть практически вся необходимая информация, однако отсутствуют такие поля, как страна и регион
-         * Поле страна получается из другого API и добавляется в mainJson
-         * Поле регион получается из третьего API по полю index из mainJson
-         * Если был сгенерирован невалидный index, генерируется новый пользователь, так как
-         * невалидный index генерируется крайне редко.
-         * Затем mainJson в виде строки передается в десериализатор
-         */
+
+    /**
+      В mainJson есть практически вся необходимая информация, однако отсутствуют такие поля, как страна и регион
+      Поле страна получается из другого API и добавляется в mainJson
+      Поле регион получается из третьего API по полю index из mainJson
+      Если был сгенерирован невалидный index, генерируется новый пользователь, так как
+      невалидный index генерируется крайне редко.
+      Затем mainJson в виде строки передается в десериализатор
+    */
+    MyRow callApi() {
         try {
             JSONObject mainJson = Unirest.get("https://randus.org/api.php").asJson().getBody().getObject();
             String country = Unirest.get("https://uinames.com/api/").asJson().getBody().getObject()

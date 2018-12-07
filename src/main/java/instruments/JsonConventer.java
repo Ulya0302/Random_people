@@ -1,4 +1,7 @@
+package instruments;
+
 import com.google.gson.*;
+import table.MyRow;
 
 import java.lang.reflect.Type;
 
@@ -17,6 +20,4 @@ public class JsonConventer implements JsonDeserializer<MyRow> {
         return new MyRow(name, surname, midname,
                 sex, country, region, city, street, index);
     }
-
-
 }
